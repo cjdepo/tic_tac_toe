@@ -1,16 +1,18 @@
 class Player
-  attr_reader :player_id, :type
+  attr_reader :player_id, :type, :board
 
   @@player_count = 0
 
-  def initialize()
+  def initialize(board)
     @@player_count += 1
     @player_id = @@player_count
     @type = @player_id == 1 ? 'x' : 'o'
+    @board = board
+
   end
 
-  def play(board, position)
-    board.space(type, position - 1)
+  def play(position)
+    @board.set_space(self.type, position - 1)
   end
 end
 
@@ -29,17 +31,17 @@ class Game
                ' ', ' ', ' ']
   end
 
-  def space(move, position)
-    @spaces[position] = move
+  def set_space(type, position)
+    @spaces[position] = type
   end
 
-  def display()
+  def display
     p spaces[0..2]
     p spaces[3..5]
     p spaces[6..8]
   end
 
-  def win?()
+  def win?
     x_indexes = spaces.each_with_index.map { |type, index| type == "x" ? index : nil}.compact
     o_indexes = spaces.each_with_index.map { |type, index| type == "o" ? index : nil}.compact
     case
@@ -67,15 +69,30 @@ class Game
   end
 end
 
-board1 = Game.new
+def new_game
+  game = Game.new
+  player1 = Player.new(game)
+  player2 = Player.new(game)
+  move = player_turn(1).to_i
+  player1.play(move)
+  move = player_turn(2).to_i
+  player2.play(move)
+  move = player_turn(1).to_i
+  player1.play(move)
+  move = player_turn(2).to_i
+  player2.play(move)
+  game.display
+  game.win?
+end
 
-player1 = Player.new
-player2 = Player.new
-player2.play(board1, 1)
-player2.play(board1, 5)
-player2.play(board1, 9)
-puts player1.player_id
-puts player2.player_id
-player3 = Player.new
-board1.display
-board1.win?
+def player_turn(player_id)
+  puts "Player #{player_id} your turn.  Enter a number
+  \ncorresponding to the spaces as follows:
+  \n     1   2   3
+  \n     4   5   6
+  \n     7   8   9
+  \nEnter your number:"
+  gets
+end
+
+new_game
