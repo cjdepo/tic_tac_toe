@@ -15,7 +15,7 @@ class Player
   end
 
   def play(board, position)
-    board.space(self.type, position)
+    board.space(self.type, position - 1)
   end
 
 end
@@ -40,9 +40,9 @@ class Game
   end
 
   def display()
-    p self.spaces[1..3]
-    p self.spaces[4..6]
-    p self.spaces[7..9]
+    p self.spaces[0..2]
+    p self.spaces[3..5]
+    p self.spaces[6..8]
   end
 
   def win?()
