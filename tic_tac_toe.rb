@@ -10,7 +10,7 @@ class Player
   end
 
   def play(board, position)
-    board.space(self.type, position - 1)
+    board.space(type, position - 1)
   end
 end
 
@@ -40,8 +40,8 @@ class Game
   end
 
   def win?()
-    x_indexes = self.spaces.each_with_index.map { |type, index| type == "x" ? index : nil}.compact
-    o_indexes = self.spaces.each_with_index.map { |type, index| type == "o" ? index : nil}.compact
+    x_indexes = spaces.each_with_index.map { |type, index| type == "x" ? index : nil}.compact
+    o_indexes = spaces.each_with_index.map { |type, index| type == "o" ? index : nil}.compact
     case
     when ([0, 1, 2] - x_indexes).empty?,
          ([3, 4, 5] - x_indexes).empty?,
@@ -51,7 +51,7 @@ class Game
          ([2, 5, 8] - x_indexes).empty?,
          ([0, 4, 8] - x_indexes).empty?,
          ([2, 4, 6] - x_indexes).empty?
-      puts "x wins"
+      puts 'x wins'
     when ([0, 1, 2] - o_indexes).empty?,
          ([3, 4, 5] - o_indexes).empty?,
          ([6, 7, 8] - o_indexes).empty?,
@@ -60,22 +60,22 @@ class Game
          ([2, 5, 8] - o_indexes).empty?,
          ([0, 4, 8] - o_indexes).empty?,
          ([2, 4, 6] - o_indexes).empty?
-      puts "o wins"
+      puts 'o wins'
     else
-      puts "nope"
+      puts 'nope'
     end
   end
 end
 
-board_1 = Game.new()
+board1 = Game.new
 
-player_1 = Player.new()
-player_2 = Player.new()
-player_2.play(board_1, 1)
-player_2.play(board_1, 4)
-player_2.play(board_1, 5)
-puts player_1.player_id
-puts player_2.player_id
-player_3 = Player.new()
-board_1.display
-board_1.win?
+player1 = Player.new
+player2 = Player.new
+player2.play(board1, 1)
+player2.play(board1, 5)
+player2.play(board1, 9)
+puts player1.player_id
+puts player2.player_id
+player3 = Player.new
+board1.display
+board1.win?
