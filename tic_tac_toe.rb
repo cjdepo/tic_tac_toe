@@ -1,4 +1,4 @@
-require 'pry-byebug'
+
 class Player
   attr_reader :player_id, :type, :board
 
