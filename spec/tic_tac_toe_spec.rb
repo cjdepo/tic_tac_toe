@@ -11,10 +11,21 @@ describe Game do
     #describe #player_turn(player_id)
     #describe #end?
     subject(:game) { described_class.new }
-    let(:player) { instance_double(Player) }
+    let(:player1) { instance_double(Player) }
+    let(:player2) { instance_double(Player) }
 
-    #describe '.new_game'
-        #it ''
+    describe '#run_game' do
+        it 'returns win message when top row is xxx' do
+            allow(game).to receive(:player_turn).with(1).and_return(1, 2, 3)
+            allow(game).to receive(:player_turn).with(2).and_return(6, 7, 9)
+            game.instance_variable_set(:@player1, player1)
+            game.instance_variable_set(:@player2, player2)
+            expect(game.run_game).to receive(:puts).once
+        end
+    end
+
+
+    
     describe '#player_turn' do
         it 'returns value when value is valid' do
             allow(game).to receive(:gets).and_return('5')
