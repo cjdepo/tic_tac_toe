@@ -1,5 +1,4 @@
 #/tic_tac_toe/game.rb
-require_relative 'player.rb'
 
 class Game
     attr_reader :spaces
@@ -9,24 +8,14 @@ class Game
                  ' ', ' ', ' ',
                  ' ', ' ', ' ']
     end
-
-    def generate_players
-        case
-        when !@player1
-            @player1 = Player.new(self)
-        when !@player2
-            @player2 = Player.new(self)
-        end
-    end
-
   
     def run_game
       while true
         position = self.player_turn(1).to_i
-        @player1.play(position)
+        @spaces[position - 1] = 'x'
         self.display
         if self.win?
-          puts "Player 1 wins!"
+          puts "Player 1 wins!" 
           break
         end
         if self.end?
@@ -35,7 +24,7 @@ class Game
         end
   
         position = self.player_turn(2).to_i
-        @player2.play(position)
+        @spaces[position - 1] = 'o'
         self.display
         if self.win?
           puts "Player 2 wins!"

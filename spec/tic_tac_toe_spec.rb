@@ -11,16 +11,29 @@ describe Game do
     #describe #player_turn(player_id)
     #describe #end?
     subject(:game) { described_class.new }
-    let(:player1) { instance_double(Player) }
-    let(:player2) { instance_double(Player) }
+
 
     describe '#run_game' do
-        it 'returns win message when top row is xxx' do
+        it 'returns win message when xxx' do
             allow(game).to receive(:player_turn).with(1).and_return(1, 2, 3)
             allow(game).to receive(:player_turn).with(2).and_return(6, 7, 9)
-            game.instance_variable_set(:@player1, player1)
-            game.instance_variable_set(:@player2, player2)
-            expect(game.run_game).to receive(:puts).once
+            allow(game).to receive(:display)
+            expect(game).to receive(:puts).with("Player 1 wins!")
+            game.run_game
+        end
+        it 'returns win message when ooo' do
+            allow(game).to receive(:player_turn).with(1).and_return(6, 7, 9)
+            allow(game).to receive(:player_turn).with(2).and_return(1, 2, 3)
+            allow(game).to receive(:display)
+            expect(game).to receive(:puts).with("Player 2 wins!")
+            game.run_game
+        end
+        it 'returns tie message when board filled' do
+            allow(game).to receive(:player_turn).with(1).and_return(1, 3, 5, 4, 8)
+            allow(game).to receive(:player_turn).with(2).and_return(2, 6, 7, 9)
+            allow(game).to receive(:display)
+            expect(game).to receive(:puts).with("Tie!")
+            game.run_game
         end
     end
 
